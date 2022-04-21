@@ -20,7 +20,7 @@ namespace WindowsFormsApp80
             sock = socket;
             try
             {
-  ip =((IPEndPoint)(sock.RemoteEndPoint)).Address.ToString();
+                ip =((IPEndPoint)(sock.RemoteEndPoint)).Address.ToString();
                 Debug.WriteLine(" Server : Connected" +ip );
             }
             catch
@@ -63,16 +63,16 @@ namespace WindowsFormsApp80
         }
         void read(IAsyncResult result)
             {
-       //     serializer.Deserialize((byte[])result.AsyncState);
-            sock.EndReceive(result);
+       //       serializer.Deserialize((byte[])result.AsyncState);
+                sock.EndReceive(result);
             
-            using (PackFormatter formatter = new PackFormatter())
-            {
-                formatter.Deserialize((byte[])result.AsyncState);
-                if(formatter.flag<1000)
+                using (PackFormatter formatter = new PackFormatter())
                 {
- OnRecevied(ip,formatter.flag, formatter.pack); 
-                }
+                    formatter.Deserialize((byte[])result.AsyncState);
+                    if(formatter.flag<1000)
+                    {
+                        OnRecevied(ip,formatter.flag, formatter.pack); 
+                    }   
                
 
             }
@@ -85,7 +85,7 @@ namespace WindowsFormsApp80
         {
             if(watch.IsRunning==false)
             {
-watch.Start();
+                watch.Start();
                
             }
             else
@@ -109,7 +109,7 @@ watch.Start();
             {
                 try
                 {
-  f.Deserialize(data);
+                f.Deserialize(data);
                 OnRecevied(ip, f.flag, f.pack);
                 }
                 catch
@@ -198,7 +198,7 @@ watch.Start();
         {
             try
             {
- OnRecevied(ip, flag, pack);
+                OnRecevied(ip, flag, pack);
             }
             catch(Exception ex)
             {
@@ -207,7 +207,7 @@ watch.Start();
 }
         void baccept(IAsyncResult res)
         {
-         Socket accpt=   sock.EndAccept(res);
+            Socket accpt=   sock.EndAccept(res);
             if (users.ContainsKey(((IPEndPoint)(accpt.RemoteEndPoint)).Address.ToString()) == false)
             {
                 users.Add(((IPEndPoint)(accpt.RemoteEndPoint)).Address.ToString(), new User(accpt));
